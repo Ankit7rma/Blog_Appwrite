@@ -5,7 +5,71 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
-const Router = createBrowserRouter([]);
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Protected from "./components/AuthLayout.jsx";
+import Signup from "./pages/Signup.jsx";
+import AllPost from "./pages/AllPost.jsx";
+import AddPost from "./pages/AddPost.jsx";
+import EditPost from "./pages/EditPost.jsx";
+import Post from "./pages/Post.jsx";
+const Router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "/", element: <Home /> },
+      {
+        path: "/login",
+        element: (
+          <Protected authentication={false}>
+            <Login />
+          </Protected>
+        ),
+      },
+      {
+        path: "/signup",
+        element: (
+          <Protected authentication={false}>
+            <Signup />
+          </Protected>
+        ),
+      },
+      {
+        path: "/allPost",
+        element: (
+          <Protected authentication>
+            <AllPost />
+          </Protected>
+        ),
+      },
+      {
+        path: "/addPost",
+        element: (
+          <Protected authentication>
+            <AddPost />
+          </Protected>
+        ),
+      },
+      {
+        path: "/editPost/:slug",
+        element: (
+          <Protected authentication>
+            <EditPost />
+          </Protected>
+        ),
+      },
+      {
+        path: "/post/:slug",
+        element: (
+          <Protected authentication>
+            <Post />
+          </Protected>
+        ),
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
